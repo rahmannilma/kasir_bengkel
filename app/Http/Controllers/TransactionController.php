@@ -52,11 +52,15 @@ class TransactionController extends Controller
 
     public function store(Request $request)
     {
-        // Sanitize input: convert empty strings to null
+        // Sanitize input: convert empty strings to null and strip thousand separators
         $input = $request->all();
         foreach (['customer_id', 'mechanic_id', 'cash_received', 'discount'] as $field) {
-            if (isset($input[$field]) && $input[$field] === '') {
-                $input[$field] = null;
+            if (isset($input[$field])) {
+                if ($input[$field] === '') {
+                    $input[$field] = null;
+                } elseif ($field === 'cash_received' || $field === 'discount') {
+                    $input[$field] = str_replace('.', '', $input[$field]);
+                }
             }
         }
         $request->merge($input);
