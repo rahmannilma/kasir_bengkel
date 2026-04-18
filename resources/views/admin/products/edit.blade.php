@@ -22,11 +22,12 @@
             </div>
             <div>
                 <label class="block text-sm font-medium mb-2">Kategori</label>
-                <select name="category_id" required class="w-full px-3 py-2 border rounded-lg">
-                    <option value="">Pilih Kategori</option>
-                    @foreach($categories as $category)
-                    <option value="{{ $category->id }}" {{ $product->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
-                    @endforeach
+                <select name="jenis" class="w-full px-3 py-2 border rounded-lg">
+                    <option value="Aki" {{ $product->jenis == 'Aki' ? 'selected' : '' }}>Aki</option>
+                    <option value="Ban Luar" {{ $product->jenis == 'Ban Luar' ? 'selected' : '' }}>Ban Luar</option>
+                    <option value="Ban Dalam" {{ $product->jenis == 'Ban Dalam' ? 'selected' : '' }}>Ban Dalam</option>
+                    <option value="Oli" {{ $product->jenis == 'Oli' ? 'selected' : '' }}>Oli</option>
+                    <option value="Sparepart" {{ $product->jenis == 'Sparepart' ? 'selected' : '' }}>Sparepart</option>
                 </select>
             </div>
         </div>

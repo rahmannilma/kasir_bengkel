@@ -14,7 +14,7 @@ class Product extends Model
     protected $fillable = [
         'code',
         'name',
-        'category_id',
+        'jenis',
         'brand',
         'part_number',
         'purchase_price',
@@ -64,5 +64,25 @@ class Product extends Model
     public function scopeLowStock($query)
     {
         return $query->whereColumn('stock', '<=', 'min_stock');
+    }
+
+    public function scopeAki($query)
+    {
+        return $query->where('jenis', 'Aki');
+    }
+
+    public function scopeBan($query)
+    {
+        return $query->where('jenis', 'Ban Luar');
+    }
+
+    public function scopeOli($query)
+    {
+        return $query->where('jenis', 'Oli');
+    }
+
+    public function scopeSparepart($query)
+    {
+        return $query->whereNotIn('jenis', ['Aki', 'Ban Luar', 'Ban Dalam', 'Oli']);
     }
 }
