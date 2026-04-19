@@ -119,8 +119,7 @@ class DashboardController extends Controller
             ->get()
             ->filter(fn ($cat) => $cat->services->isNotEmpty());
 
-        // Items without category
-        $productsWithoutCategory = Product::active()->inStock()->whereNull('category_id')->orderBy('name')->get();
+        $productsWithoutCategory = Product::active()->inStock()->orderBy('name')->get();
         $servicesWithoutCategory = Service::active()->whereNull('category_id')->orderBy('name')->get();
 
         $mechanics = Mechanic::active()->orderBy('name')->get();

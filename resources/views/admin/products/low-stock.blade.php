@@ -24,23 +24,22 @@
     </div>
 </div>
 
-<!-- Filters -->
-<div class="bg-white rounded-lg shadow p-4 mb-6">
-    <form method="GET" class="flex flex-wrap gap-4">
-        <input type="text" name="search" placeholder="Cari sparepart..." value="{{ request('search') }}"
-            class="px-4 py-2 border rounded-lg flex-1 min-w-[200px]">
-        <select name="category_id" class="px-4 py-2 border rounded-lg">
-            <option value="">Semua Kategori</option>
-            @foreach($categories as $category)
-            <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>
-                {{ $category->name }}
-            </option>
-            @endforeach
-        </select>
-        <button type="submit" class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700">
-            <i class="fas fa-search"></i>
-        </button>
-    </form>
+<!-- Search Form -->
+<div class="bg-white rounded-lg shadow mb-4">
+    <div class="p-4">
+        <form method="GET" class="flex flex-wrap gap-4">
+            <input type="text" name="search" placeholder="Cari sparepart..." value="{{ request('search') }}"
+                class="px-4 py-2 border rounded-lg flex-1 min-w-[200px]">
+            <button type="submit" class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700">
+                <i class="fas fa-search"></i> Cari
+            </button>
+            @if(request('search'))
+            <a href="{{ route('admin.products.low-stock') }}" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300">
+                <i class="fas fa-times"></i> Reset
+            </a>
+            @endif
+        </form>
+    </div>
 </div>
 
 <!-- Products Table -->
@@ -50,8 +49,9 @@
             <tr>
                 <th class="px-4 py-3 text-left text-sm font-medium text-red-700">Kode</th>
                 <th class="px-4 py-3 text-left text-sm font-medium text-red-700">Nama</th>
-                <th class="px-4 py-3 text-left text-sm font-medium text-red-700">Kategori</th>
-                <th class="px-4 py-3 text-left text-sm font-medium text-red-700">Distributor</th>
+                <th class="px-4 py-3 text-left text-sm font-medium text-red-700">Jenis</th>
+                <th class="px-4 py-3 text-left text-sm font-medium text-red-700">Merek</th>
+                <th class="px-4 py-3 text-right text-sm font-medium text-red-700">Harga Beli</th>
                 <th class="px-4 py-3 text-right text-sm font-medium text-red-700">Harga Jual</th>
                 <th class="px-4 py-3 text-center text-sm font-medium text-red-700">Stok Saat Ini</th>
                 <th class="px-4 py-3 text-center text-sm font-medium text-red-700">Stok Minimum</th>
@@ -65,17 +65,13 @@
                 <td class="px-4 py-3 text-sm">{{ $product->code }}</td>
                 <td class="px-4 py-3">
                     <p class="font-medium">{{ $product->name }}</p>
-                    @if($product->brand)
-                    <p class="text-xs text-gray-500">{{ $product->brand }}</p>
+                    @if($product->part_number)
+                    <p class="text-xs text-gray-500">{{ $product->part_number }}</p>
                     @endif
                 </td>
-                <td class="px-4 py-3 text-sm">{{ $product->category->name ?? '-' }}</td>
-                <td class="px-4 py-3 text-sm">
-                    {{ $product->category->distributor->name ?? '-' }}
-                    @if($product->category->distributor && $product->category->distributor->phone)
-                    <p class="text-xs text-gray-500">{{ $product->category->distributor->phone }}</p>
-                    @endif
-                </td>
+                <td class="px-4 py-3 text-sm">{{ $product->jenis ?? '-' }}</td>
+                <td class="px-4 py-3 text-sm">{{ $product->brand ?? '-' }}</td>
+                <td class="px-4 py-3 text-right text-sm">Rp {{ number_format($product->purchase_price, 0, ',', '.') }}</td>
                 <td class="px-4 py-3 text-right text-sm">Rp {{ number_format($product->selling_price, 0, ',', '.') }}</td>
                 <td class="px-4 py-3 text-center">
                     <span class="px-2 py-1 rounded text-sm font-bold {{ $product->stock == 0 ? 'bg-red-600 text-white' : 'bg-red-100 text-red-800' }}">
@@ -102,7 +98,7 @@
             </tr>
             @empty
             <tr>
-                <td colspan="9" class="px-4 py-8 text-center text-gray-400">
+                <td colspan="10" class="px-4 py-8 text-center text-gray-400">
                     <i class="fas fa-check-circle text-green-500 text-3xl mb-2 block"></i>
                     Semua stok sparepart dalam kondisi baik
                 </td>

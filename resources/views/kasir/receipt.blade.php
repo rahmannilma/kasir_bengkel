@@ -3,8 +3,8 @@
 @section('title', 'Struk - Bengkel POS')
 
 @section('content')
-<div class="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-    <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6">
+<div class="min-h-screen bg-gray-100 flex items-center justify-center p-1">
+    <div class="bg-white shadow-xl w-full max-w-[80mm] p-3" style="width: 80mm; max-width: 80mm;">
         @if(session('success'))
         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4 text-center">
             <i class="fas fa-check-circle mr-2"></i> {{ session('success') }}
@@ -108,7 +108,7 @@
             <p class="text-xs text-gray-400 mt-2">Barang yang sudah dibeli tidak dapat dikembalikan</p>
         </div>
 
-        <div class="mt-6 flex gap-2">
+        <div class="mt-3 flex gap-2">
             <button onclick="window.print()" class="flex-1 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
                 <i class="fas fa-print mr-2"></i> Cetak
             </button>
@@ -122,19 +122,43 @@
 
 <style>
 @media print {
+    @page {
+        size: 80mm auto;
+        margin: 0;
+    }
+    body {
+        width: 80mm;
+    }
     body * {
         visibility: hidden;
     }
-    .bg-gray-100, .bg-gray-100 * {
+    .bg-white, .bg-white * {
         visibility: visible;
     }
-    .bg-gray-100 {
+    .bg-white {
         position: absolute;
         left: 0;
         top: 0;
+        width: 80mm;
+        max-width: 80mm;
+        box-shadow: none;
+        border: none;
+        padding: 5mm;
+    }
+    .text-xl {
+        font-size: 14px;
+    }
+    .text-sm, text-xs {
+        font-size: 10px;
+    }
+    .text-lg {
+        font-size: 14px;
     }
     button, a {
         display: none !important;
+    }
+    .border-t, .border-b {
+        border-color: #999 !important;
     }
 }
 </style>
