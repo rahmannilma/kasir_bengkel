@@ -133,7 +133,7 @@
     </nav>
 
     <!-- Hero Section -->
-    <header class="relative h-screen min-h-[900px] flex items-center overflow-hidden pt-[10rem]">
+    <header class="relative h-screen min-h-[600px] md:min-h-[900px] flex items-center overflow-hidden pt-24 md:pt-[10rem]">
         <div class="absolute inset-0 z-0">
             <img alt="Modern Car Workshop" class="w-full h-full object-cover opacity-65" src="/images/galeri/foto2.jpg">
             <div class="absolute inset-0 bg-gradient-to-r from-surface via-surface/80 to-transparent"></div>
@@ -189,7 +189,7 @@
         </div>
         
         <!-- Scroll indicator -->
-        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-float">
+        <div class="absolute bottom-12 left-1/2 -translate-x-1/2 animate-float">
             <span class="material-symbols-outlined text-slate-500">keyboard_arrow_down</span>
         </div>
     </header>
@@ -559,7 +559,7 @@
                     </div>
                 </div>
                 <p class="text-sm tracking-wide text-slate-500 leading-relaxed">
-                    Spesialis perbaikan mobil modern dengan standar teknologi terkini di Sulawesi Selatan.
+                    Spesialis perbaikan mobil modern dengan standar teknologi terkini di Sulawesi Barat.
                 </p>
             </div>
             <div class="md:col-span-1">
