@@ -1,19 +1,21 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\TransactionController;
-use App\Http\Controllers\ReportController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DistributorController;
-use App\Http\Controllers\SettingController;
 use App\Http\Controllers\MechanicController;
 use App\Http\Controllers\MechanicSalaryController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\SettingController;
+use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\UserController;
+use App\Models\Review;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,13 +23,19 @@ use App\Http\Controllers\MechanicSalaryController;
 |--------------------------------------------------------------------------
 */
 
-// Landing page - redirect to login or dashboard
+// Landing page - show public website
 Route::get('/', function () {
     if (auth()->check()) {
         return redirect(auth()->user()->role === 'admin' ? '/admin/dashboard' : '/kasir');
     }
-    return redirect('/login');
+
+    $reviews = Review::latest()->take(8)->get();
+
+    return view('welcome', compact('reviews'));
 });
+
+// Reviews - public route
+Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 
 // Authentication
 Route::middleware('guest')->group(function () {

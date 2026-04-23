@@ -41,11 +41,6 @@
             </button>
         </form>
 
-        <div class="mt-6 text-center text-sm text-gray-500">
-            <p>Default credentials:</p>
-            <p class="mt-1">Admin: admin@bengkel.com / password</p>
-            <p>Kasir: kasir@bengkel.com / password</p>
-        </div>
     </div>
 </div>
 @endsection
