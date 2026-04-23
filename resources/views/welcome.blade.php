@@ -133,7 +133,7 @@
     </nav>
 
     <!-- Hero Section -->
-    <header class="relative h-screen min-h-[700px] flex items-center overflow-hidden pt-[10rem]">
+    <header class="relative h-screen min-h-[900px] flex items-center overflow-hidden pt-[10rem]">
         <div class="absolute inset-0 z-0">
             <img alt="Modern Car Workshop" class="w-full h-full object-cover opacity-65" src="/images/galeri/foto2.jpg">
             <div class="absolute inset-0 bg-gradient-to-r from-surface via-surface/80 to-transparent"></div>
