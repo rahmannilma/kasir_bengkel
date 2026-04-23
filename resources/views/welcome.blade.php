@@ -133,7 +133,7 @@
     </nav>
 
     <!-- Hero Section -->
-    <header class="relative h-screen min-h-[700px] flex items-center overflow-hidden">
+    <header class="relative h-screen min-h-[700px] flex items-center overflow-hidden pt-[10rem]">
         <div class="absolute inset-0 z-0">
             <img alt="Modern Car Workshop" class="w-full h-full object-cover opacity-65" src="/images/galeri/foto2.jpg">
             <div class="absolute inset-0 bg-gradient-to-r from-surface via-surface/80 to-transparent"></div>
@@ -144,7 +144,7 @@
         <div class="absolute top-1/4 left-10 w-72 h-72 bg-orange-600/20 rounded-full filter blur-3xl animate-float"></div>
         <div class="absolute bottom-1/4 right-10 w-96 h-96 bg-orange-500/10 rounded-full filter blur-3xl animate-float" style="animation-delay: 2s;"></div>
         
-        <div class="relative z-10 container mx-auto px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-8 pt-[10rem] md:pt-0">
+        <div class="relative z-10 container mx-auto px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-8 pt-0 md:pt-0">
             <div class="lg:col-span-8">
                 <div class="inline-block px-4 py-1 mb-6 border border-secondary-container/30 bg-secondary-container/10 rounded-full">
                     <span class="text-secondary font-bold text-xs uppercase tracking-[0.2em]">Authorized Technical Center</span>
