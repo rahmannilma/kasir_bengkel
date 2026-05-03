@@ -144,49 +144,51 @@
         <div class="absolute top-1/4 left-10 w-72 h-72 bg-orange-600/20 rounded-full filter blur-3xl animate-float"></div>
         <div class="absolute bottom-1/4 right-10 w-96 h-96 bg-orange-500/10 rounded-full filter blur-3xl animate-float" style="animation-delay: 2s;"></div>
         
-        <div class="relative z-10 container mx-auto px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-8 pt-0 md:pt-0">
-            <div class="lg:col-span-8">
-                <div class="inline-block px-4 py-1 mb-6 border border-secondary-container/30 bg-secondary-container/10 rounded-full">
-                    <span class="text-secondary font-bold text-xs uppercase tracking-[0.2em]">Authorized Technical Center</span>
+<div class="relative z-10 container mx-auto px-4 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-8 pt-0 md:pt-0">
+    <div class="lg:col-span-8">
+        <div class="flex flex-col items-start">
+            <div class="inline-block px-3 py-1 mb-4 border border-secondary-container/30 bg-secondary-container/10 rounded-full">
+                <span class="text-secondary font-bold text-xs uppercase tracking-[0.2em]">Authorized Technical Center</span>
+            </div>
+            <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold text-on-surface leading-tight tracking-tighter break-words" style="margin-top: 1rem;">
+                Bengkel Mobil Modern <span class="text-secondary-container">Terpercaya</span> di Kalukku
+            </h1>
+            <p class="text-lg md:text-xl text-slate-300 max-w-2xl mb-10 leading-relaxed">
+                Diagnosa canggih, suku cadang original, dan tim mekanik bersertifikat. Solusi tepat untuk performa maksimal mobil Anda.
+            </p>
+            <div class="flex flex-wrap gap-4 justify-center">
+                <a href="#kontak" class="kinetic-gradient text-on-secondary-fixed font-black px-8 py-4 rounded-xl text-base uppercase tracking-wider hover:brightness-110 active:scale-95 transition-all flex items-center gap-2 shadow-2xl shadow-orange-500/20">
+                    <span class="material-symbols-outlined">event</span>
+                    Booking Servis
+                </a>
+                <a href="#layanan" class="bg-surface-container-high text-primary font-bold px-8 py-4 rounded-xl text-base uppercase tracking-wider hover:bg-surface-container-highest transition-all flex items-center gap-3 border border-slate-700/50">
+                    <span class="material-symbols-outlined">explore</span>
+                    Lihat Layanan
+                </a>
+            </div>
+            
+            <!-- Stats -->
+            <div class="flex flex-wrap gap-6 mt-10 pt-6 border-t border-slate-800/50 justify-center">
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-on-surface">10+</div>
+                    <div class="text-xs text-slate-500 uppercase tracking-wider">Tahun Pengalaman</div>
                 </div>
-                <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold text-on-surface leading-tight tracking-tighter mb-6">
-                    Bengkel Mobil Modern <span class="text-secondary-container">Terpercaya</span> di Kalukku
-                </h1>
-                <p class="text-lg md:text-xl text-slate-400 max-w-2xl mb-10 leading-relaxed">
-                    Performa mesin maksimal dengan teknologi diagnosa terkini dan mekanik bersertifikat. Solusi otomotif presisi untuk keamanan berkendara Anda.
-                </p>
-                <div class="flex flex-wrap gap-4">
-                    <a href="#kontak" class="kinetic-gradient text-on-secondary-fixed font-black px-8 py-4 rounded-lg text-base uppercase tracking-wider hover:brightness-110 active:scale-95 transition-all flex items-center gap-2">
-                        <span class="material-symbols-outlined">event</span>
-                        Booking Servis
-                    </a>
-                    <a href="#layanan" class="bg-surface-container-high text-primary font-bold px-8 py-4 rounded-lg text-base uppercase tracking-wider hover:bg-surface-container-highest transition-all flex items-center gap-3">
-                        <span class="material-symbols-outlined">explore</span>
-                        Lihat Layanan
-                    </a>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-on-surface">5000+</div>
+                    <div class="text-xs text-slate-500 uppercase tracking-wider">Mobil Servis</div>
                 </div>
-                
-                <!-- Stats -->
-                <div class="flex flex-wrap gap-8 mt-12 pt-8 border-t border-slate-800/50">
-                    <div>
-                        <div class="text-3xl font-bold text-on-surface">10+</div>
-                        <div class="text-sm text-slate-500 uppercase tracking-wider">Tahun Pengalaman</div>
-                    </div>
-                    <div>
-                        <div class="text-3xl font-bold text-on-surface">5000+</div>
-                        <div class="text-sm text-slate-500 uppercase tracking-wider">Mobil Servis</div>
-                    </div>
-                    <div>
-                        <div class="text-3xl font-bold text-on-surface">15+</div>
-                        <div class="text-sm text-slate-500 uppercase tracking-wider">Teknisi Ahli</div>
-                    </div>
-                    <div>
-                        <div class="text-3xl font-bold text-secondary-container">98%</div>
-                        <div class="text-sm text-slate-500 uppercase tracking-wider">Kepuasan</div>
-                    </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-on-surface">15+</div>
+                    <div class="text-xs text-slate-500 uppercase tracking-wider">Teknisi Ahli</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-secondary-container">98%</div>
+                    <div class="text-xs text-slate-500 uppercase tracking-wider">Kepuasan</div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
         
         <!-- Scroll indicator -->
         <div class="absolute bottom-12 left-1/2 -translate-x-1/2 animate-float">
@@ -198,11 +200,14 @@
     <section id="tentang" class="py-24 bg-surface px-6 lg:px-16">
         <div class="max-w-7xl mx-auto">
             <div class="mb-16">
-                <span class="text-primary font-bold text-xs uppercase tracking-[0.3em]">Excellence Engineered</span>
-                <h2 class="text-4xl md:text-5xl font-bold mt-4 text-on-surface">Mengapa Memilih Kami</h2>
+                <span class="text-secondary-container font-bold text-xs uppercase tracking-[0.3em]">Excellence Engineered</span>
+                <h2 class="text-4xl md:text-5xl font-extrabold mt-4 text-on-surface">Mengapa Hasnati Motor Tasiu?</h2>
+                <p class="text-slate-400 mt-4 max-w-2xl">
+                    Bengkel modern dengan standar internasional untuk mobil Anda yang lebih dari sekedar kendaraan
+                </p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-surface-container p-8 rounded-xl relative group overflow-hidden border border-surface-container-high/50 hover:border-secondary-container/30 transition-all">
+                <div class="bg-surface-container p-8 rounded-xl relative group overflow-hidden border border-surface-container-high/50 hover:border-secondary-container/30 transition-all hover:-translate-y-1">
                     <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
                         <span class="material-symbols-outlined text-8xl">verified</span>
                     </div>
@@ -211,10 +216,10 @@
                     </div>
                     <h3 class="text-xl font-bold mb-4 text-on-surface">Quality First</h3>
                     <p class="text-slate-400 leading-relaxed">
-                        Kami hanya menggunakan suku cadang orisinal dan oli berkualitas tinggi untuk menjamin durabilitas kendaraan Anda.
+                        Suku cadang original dan oli premium berjaminan untuk performa optimal serta keamanan berkendara Anda.
                     </p>
                 </div>
-                <div class="bg-surface-container-high p-8 rounded-xl relative group overflow-hidden border border-surface-container-high/50 hover:border-secondary-container/30 transition-all">
+                <div class="bg-surface-container-high p-8 rounded-xl relative group overflow-hidden border border-surface-container-high/50 hover:border-secondary-container/30 transition-all hover:-translate-y-1">
                     <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
                         <span class="material-symbols-outlined text-8xl">bolt</span>
                     </div>
@@ -223,10 +228,10 @@
                     </div>
                     <h3 class="text-xl font-bold mb-4 text-on-surface">Express Service</h3>
                     <p class="text-slate-400 leading-relaxed">
-                        Waktu Anda berharga. Proses diagnosa cepat dan pengerjaan efisien tanpa mengurangi ketelitian teknis.
+                        Waktu Anda berharga. Diagnosa instan dan servis efisien tanpa mengorbankan kualitas teknis.
                     </p>
                 </div>
-                <div class="bg-surface-container p-8 rounded-xl relative group overflow-hidden border border-surface-container-high/50 hover:border-secondary-container/30 transition-all">
+                <div class="bg-surface-container p-8 rounded-xl relative group overflow-hidden border border-surface-container-high/50 hover:border-secondary-container/30 transition-all hover:-translate-y-1">
                     <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
                         <span class="material-symbols-outlined text-8xl">engineering</span>
                     </div>
@@ -235,7 +240,7 @@
                     </div>
                     <h3 class="text-xl font-bold mb-4 text-on-surface">Master Techs</h3>
                     <p class="text-slate-400 leading-relaxed">
-                        Tim teknisi kami terlatih secara profesional untuk menangani berbagai merk mobil dengan standar bengkel resmi.
+                        Tim teknisi profesional bersertifikat siap menangani semua merek mobil dengan standar bengkel resmi.
                     </p>
                 </div>
             </div>
@@ -243,14 +248,14 @@
     </section>
 
     <!-- Services Section -->
-    <section id="layanan" class="py-24 bg-surface-container-low px-6 lg:px-16 overflow-hidden">
+    <section id="layanan" class="py-24 bg-gradient-to-b from-surface to-surface-container-low px-6 lg:px-16 overflow-hidden">
         <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
-                <div>
-                    <span class="text-primary font-bold text-xs uppercase tracking-[0.3em]">Core Solutions</span>
-                    <h2 class="text-4xl md:text-5xl font-bold mt-4 text-on-surface">Layanan Unggulan</h2>
-                </div>
-                <div class="h-[2px] w-32 bg-secondary-container mb-4"></div>
+            <div class="text-center mb-16">
+                <span class="text-secondary-container font-bold text-xs uppercase tracking-[0.3em]">Core Solutions</span>
+                <h2 class="text-4xl md:text-5xl font-extrabold mt-4 text-on-surface">Layanan Unggulan Kami</h2>
+                <p class="text-slate-400 mt-4 max-w-2xl mx-auto">
+                    Solusi perawatan komprehensif untuk semua kebutuhan kendaraan Anda
+                </p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -475,17 +480,17 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="py-20 bg-surface-container-low relative overflow-hidden">
-        <div class="absolute inset-0 opacity-20">
-            <div class="absolute top-0 left-1/4 w-64 h-64 bg-orange-600 rounded-full filter blur-3xl"></div>
-            <div class="absolute bottom-0 right-1/4 w-64 h-64 bg-orange-500 rounded-full filter blur-3xl"></div>
+    <section class="py-20 bg-gradient-to-r from-surface-container-low to-surface-container relative overflow-hidden">
+        <div class="absolute inset-0 opacity-30">
+            <div class="absolute top-0 left-1/4 w-64 h-64 bg-secondary-container rounded-full filter blur-3xl animate-float"></div>
+            <div class="absolute bottom-0 right-1/4 w-64 h-64 bg-secondary-container rounded-full filter blur-3xl animate-float" style="animation-delay: 2s;"></div>
         </div>
         <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
-            <h2 class="text-3xl md:text-4xl font-bold text-on-surface mb-6">
-                Siapkan Mobil Anda Untuk Perjalanan?
+            <h2 class="text-3xl md:text-4xl font-extrabold text-on-surface mb-6">
+                Siap Melayani Servis Mobil Anda?
             </h2>
-            <p class="text-slate-400 mb-8 max-w-xl mx-auto">
-                Jadwalkan servis sekarang dan rasakan perbedaan pelayanan premium dari Hasnati Motor Tasiu.
+            <p class="text-slate-300 mb-8 max-w-xl mx-auto text-lg">
+                Jadwalkan servis hari ini dan nikmati pelayanan premium dari Hasnati Motor Tasiu dengan teknologi diagnosa terkini.
             </p>
             <a href="https://wa.me/6285396587024?text=Halo%20Hasnati%20Motor%20Tasiu,%20saya%20ingin%20memesan%20jadwal%20servis" class="kinetic-gradient text-on-secondary-fixed font-black px-8 py-4 rounded-lg text-base uppercase tracking-wider hover:brightness-110 transition-all inline-flex items-center gap-3">
                 <span class="material-symbols-outlined">chat</span>
