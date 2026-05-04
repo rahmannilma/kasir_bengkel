@@ -138,6 +138,14 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 // Transaction store (accessible from kasir)
 Route::middleware(['auth'])->group(function () {
     Route::post('/transactions', [TransactionController::class, 'store'])->name('transactions.store');
+    Route::post('/transactions/draft', [TransactionController::class, 'storeDraft'])->name('transactions.draft');
     Route::get('/receipt/{transaction}', [TransactionController::class, 'printReceipt'])->name('receipt');
     Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');
+});
+
+// Pending transactions - kasir routes
+Route::middleware(['auth', 'kasir'])->prefix('kasir')->name('kasir.')->group(function () {
+    Route::get('/pending', [TransactionController::class, 'pendingIndex'])->name('pending');
+    Route::get('/pending/{transaction}/continue', [TransactionController::class, 'continue'])->name('pending.continue');
+    Route::post('/pending/{transaction}/complete', [TransactionController::class, 'complete'])->name('pending.complete');
 });

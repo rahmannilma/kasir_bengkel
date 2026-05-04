@@ -1,31 +1,21 @@
 @extends('layouts.app')
 
-@section('title', 'Kasir - Bengkel POS')
+@section('title', 'Lanjutkan Transaksi - Bengkel POS')
 
 @section('content')
 <div class="flex h-screen">
     <!-- Left Panel - Product & Service Selection -->
     <div class="flex-1 flex flex-col bg-gray-100">
-        // Header -->
+        <!-- Header -->
         <div class="bg-white shadow p-4">
             <div class="flex justify-between items-center">
                 <div>
-                    <h1 class="text-xl font-bold">Kasir</h1>
-                    <p class="text-sm text-gray-500">{{ now()->format('d M Y, H:i') }} | {{ auth()->user()->name }}</p>
+                    <h1 class="text-xl font-bold">Lanjutkan Transaksi</h1>
+                    <p class="text-sm text-gray-500">{{ $transaction->invoice_number }} | {{ now()->format('d M Y, H:i') }}</p>
                 </div>
-                <div class="flex gap-4">
-                    <div class="text-right">
-                        <p class="text-sm text-gray-500">Hari Ini</p>
-                        <p class="text-lg font-bold text-green-600">Rp {{ number_format($todaySales, 0, ',', '.') }}</p>
-                    </div>
-                    <div class="text-right">
-                        <p class="text-sm text-gray-500">Transaksi</p>
-                        <p class="text-lg font-bold">{{ $todayTransactions }}</p>
-                    </div>
-                    <a href="{{ route('kasir.pending') }}" class="px-4 py-2 bg-orange-100 text-orange-700 rounded-lg hover:bg-orange-200">
-                        <i class="fas fa-file-alt mr-1"></i> Draft ({{ \App\Models\Transaction::where('status', 'pending')->count() }})
-                    </a>
-                </div>
+                <a href="{{ route('kasir.pending') }}" class="px-4 py-2 border rounded-lg hover:bg-gray-50">
+                    <i class="fas fa-arrow-left mr-2"></i> Kembali ke Draft
+                </a>
             </div>
         </div>
 
@@ -180,8 +170,8 @@
     <div class="w-96 bg-white shadow-xl flex flex-col">
         <div class="p-4 border-b">
             <h2 class="text-lg font-bold">Keranjang</h2>
-            <div id="customer-display" class="text-xs text-gray-500 mt-1 hidden">
-                <span id="display-name">-</span> | <span id="display-plate">-</span>
+            <div id="customer-display" class="text-xs text-gray-500 mt-1">
+                <span id="display-name">{{ $transaction->customer->name ?? '-' }}</span> | <span id="display-plate">{{ $transaction->customer->vehicle_plate ?? '-' }}</span>
             </div>
             <div class="flex gap-2 mt-2">
                 <button onclick="showManualServiceModal()" type="button" class="text-sm bg-green-100 text-green-700 px-2 py-1 rounded hover:bg-green-200">
@@ -191,18 +181,18 @@
             </div>
         </div>
 
-        <form id="transaction-form" action="{{ route('transactions.store') }}" method="POST" class="flex-1 flex flex-col">
+        <form id="transaction-form" action="{{ route('kasir.pending.complete', $transaction->id) }}" method="POST" class="flex-1 flex flex-col">
             @csrf
             
             <!-- Customer Info -->
             <div class="p-4 border-b space-y-3">
                 <div>
-                    <label class="block text-sm font-medium mb-2">Nama Pelanggan</label>
-                    <input type="text" name="customer_name" id="customer-name" class="w-full px-3 py-2 border rounded-lg text-sm" placeholder="Masukkan nama pelanggan">
+                    <label class="block text-sm font-medium mb-2">Nama Pelanggan/Mobil</label>
+                    <input type="text" name="customer_name" id="customer-name" class="w-full px-3 py-2 border rounded-lg text-sm" placeholder="Masukkan nama pelanggan" value="{{ $transaction->customer->name ?? '' }}">
                 </div>
                 <div>
                     <label class="block text-sm font-medium mb-2">Plat Nomor</label>
-                    <input type="text" name="customer_plate" id="customer-plate" class="w-full px-3 py-2 border rounded-lg text-sm" placeholder="Contoh: B 1234 XYZ">
+                    <input type="text" name="customer_plate" id="customer-plate" class="w-full px-3 py-2 border rounded-lg text-sm" placeholder="Contoh: B 1234 XYZ" value="{{ $transaction->customer->vehicle_plate ?? '' }}">
                 </div>
             </div>
 
@@ -212,7 +202,7 @@
                 <div class="space-y-2 max-h-32 overflow-y-auto border rounded-lg p-2" id="mechanics-container">
                     @foreach($mechanics as $mechanic)
                     <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-1 rounded">
-                        <input type="checkbox" name="mechanic_ids[]" value="{{ $mechanic->id }}" class="rounded text-blue-600">
+                        <input type="checkbox" name="mechanic_ids[]" value="{{ $mechanic->id }}" class="rounded text-blue-600" {{ in_array($mechanic->id, $transaction->mechanic_ids ?? []) ? 'checked' : '' }}>
                         <span class="text-sm">{{ $mechanic->name }}{{ $mechanic->specialization ? ' - ' . $mechanic->specialization : '' }}</span>
                     </label>
                     @endforeach
@@ -221,10 +211,21 @@
 
             <!-- Cart Items -->
             <div class="flex-1 overflow-y-auto p-4" id="cart-items">
-                <div class="text-center text-gray-400 py-8">
-                    <i class="fas fa-shopping-cart text-4xl mb-2"></i>
-                    <p>Keranjang kosong</p>
+                <!-- Initial items from transaction -->
+                @foreach($transaction->items as $item)
+                <div class="flex justify-between items-center py-2 border-b">
+                    <div class="flex-1">
+                        <p class="font-medium text-sm">{{ $item->item_name }}</p>
+                        <p class="text-xs text-gray-500">Rp {{ number_format($item->price, 0, ',', '.') }} x {{ $item->quantity }}</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button type="button" onclick="updateQuantity({{ $loop->index }}, -1)" class="w-7 h-7 rounded bg-gray-200 hover:bg-gray-300">-</button>
+                        <span class="w-8 text-center">{{ $item->quantity }}</span>
+                        <button type="button" onclick="updateQuantity({{ $loop->index }}, 1)" class="w-7 h-7 rounded bg-gray-200 hover:bg-gray-300">+</button>
+                        <button type="button" onclick="removeItem({{ $loop->index }})" class="w-7 h-7 rounded bg-red-100 text-red-600 hover:bg-red-200"><i class="fas fa-trash text-xs"></i></button>
+                    </div>
                 </div>
+                @endforeach
             </div>
 
             <!-- Hidden items for form submission -->
@@ -238,7 +239,7 @@
                 </div>
                 <div class="flex justify-between text-sm">
                     <span>Diskon</span>
-                    <input type="number" name="discount" id="discount" value="0" min="0" 
+                    <input type="number" name="discount" id="discount" value="{{ $transaction->discount }}" min="0" 
                         class="w-24 text-right border rounded px-2 py-1" onchange="calculateTotal()">
                 </div>
                 <div class="flex justify-between text-lg font-bold">
@@ -269,19 +270,15 @@
                 </div>
             </div>
 
-<div class="p-4 bg-gray-50">
-            <div class="flex gap-2">
-                <button type="button" onclick="saveDraft()" class="flex-1 py-2 rounded-lg font-bold border border-blue-600 text-blue-600 hover:bg-blue-50 transition">
-                    <i class="fas fa-save mr-2"></i> Simpan Draft
-                </button>
-                <button type="submit" id="submit-btn" disabled
-                    class="flex-1 py-2 rounded-lg font-bold text-white disabled:bg-gray-300 disabled:cursor-not-allowed
+            <!-- Submit -->
+            <div class="p-4 bg-gray-50">
+                <button type="submit" id="submit-btn"
+                    class="w-full py-3 rounded-lg font-bold text-white
                     bg-green-600 hover:bg-green-700 transition">
-                    <i class="fas fa-check mr-2"></i> Bayar
+                    <i class="fas fa-check mr-2"></i> Selesaikan Transaksi
                 </button>
             </div>
-        </div>
-         </form>
+        </form>
     </div>
 </div>
 
@@ -289,6 +286,20 @@
 let cart = [];
 let currentType = 'product';
 let currentCategory = 'all';
+let editIndex = 0;
+
+// Initialize cart with existing items
+@foreach($transaction->items as $index => $item)
+cart.push({
+    type: '{{ $item->item_type }}',
+    id: {{ $item->item_id ?? ($item->item_type === 'service' && $item->item_id === null ? "'manual_{$item->item_name}_{$index}'" : $item->item_id) }},
+    name: '{{ addslashes($item->item_name) }}',
+    price: {{ $item->price }},
+    maxStock: {{ $item->item_type === 'service' ? 999 : 999 }},
+    quantity: {{ $item->quantity }}
+});
+@endforeach
+editIndex = cart.length;
 
 function switchType(type) {
     currentType = type;
@@ -357,6 +368,7 @@ function addItem(type, id, name, price, maxStock) {
         }
     } else {
         cart.push({ type, id, name, price, maxStock, quantity: 1 });
+        editIndex++;
     }
     renderCart();
 }
@@ -392,7 +404,6 @@ function renderCart() {
     if (cart.length === 0) {
         container.innerHTML = '<div class="text-center text-gray-400 py-8"><i class="fas fa-shopping-cart text-4xl mb-2"></i><p>Keranjang kosong</p></div>';
         hiddenItems.innerHTML = '';
-        document.getElementById('submit-btn').disabled = true;
         return;
     }
     let html = '';
@@ -402,7 +413,6 @@ function renderCart() {
     });
     container.innerHTML = html;
     hiddenItems.innerHTML = cart.map((item, index) => '<input type="hidden" name="items[' + index + '][type]" value="' + item.type + '"><input type="hidden" name="items[' + index + '][id]" value="' + item.id + '"><input type="hidden" name="items[' + index + '][name]" value="' + item.name + '"><input type="hidden" name="items[' + index + '][price]" value="' + item.price + '"><input type="hidden" name="items[' + index + '][quantity]" value="' + item.quantity + '">').join('');
-    document.getElementById('submit-btn').disabled = false;
     calculateTotal();
 }
 
@@ -461,65 +471,6 @@ function editPrice(index) {
     }
 }
 
-function saveDraft() {
-    if (cart.length === 0) {
-        alert('Keranjang masih kosong!');
-        return;
-    }
-
-    const customerName = document.getElementById('customer-name').value;
-    const customerPlate = document.getElementById('customer-plate').value;
-    const discount = document.getElementById('discount').value;
-    const notes = '';
-    const mechanicIds = Array.from(document.querySelectorAll('input[name="mechanic_ids[]"]:checked')).map(cb => cb.value);
-
-    const formData = {
-        items: cart,
-        customer_name: customerName,
-        customer_plate: customerPlate,
-        discount: discount,
-        notes: notes,
-        mechanic_ids: mechanicIds
-    };
-
-    fetch('{{ route('transactions.draft') }}', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        body: JSON.stringify(formData)
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert('Draft berhasil disimpan! No. Invoice: ' + data.invoice || '');
-            cart = [];
-            renderCart();
-            document.getElementById('customer-name').value = '';
-            document.getElementById('customer-plate').value = '';
-            updateCustomerDisplay();
-        } else {
-            alert('Error: ' + data.error);
-        }
-    })
-    .catch(error => {
-        alert('Terjadi kesalahan: ' + error.message);
-    });
-}
-
-function updateCustomerDisplay() {
-    const name = document.getElementById('customer-name').value || '-';
-    const plate = document.getElementById('customer-plate').value || '-';
-    document.getElementById('display-name').textContent = name;
-    document.getElementById('display-plate').textContent = plate;
-    const display = document.getElementById('customer-display');
-    display.classList.toggle('hidden', !document.getElementById('customer-name').value && !document.getElementById('customer-plate').value);
-}
-
-document.getElementById('customer-name').addEventListener('input', updateCustomerDisplay);
-document.getElementById('customer-plate').addEventListener('input', updateCustomerDisplay);
-
 document.getElementById('payment-method').addEventListener('change', function() {
     const cashInput = document.getElementById('cash-input');
     if (this.value === 'cash') {
@@ -573,8 +524,20 @@ function submitManualService() {
     const tempId = 'manual_' + Date.now();
     addItem('service', tempId, name, price, 999);
     hideManualServiceModal();
-    alert('Jasa "' + name + '" berhasil ditambahkan ke keranjang!');
 }
+
+function updateCustomerDisplay() {
+    const name = document.getElementById('customer-name').value || '-';
+    const plate = document.getElementById('customer-plate').value || '-';
+    document.getElementById('display-name').textContent = name;
+    document.getElementById('display-plate').textContent = plate;
+}
+
+document.getElementById('customer-name').addEventListener('input', updateCustomerDisplay);
+document.getElementById('customer-plate').addEventListener('input', updateCustomerDisplay);
+
+// Initialize
+renderCart();
 </script>
 
 <!-- Manual Service Modal -->
@@ -586,7 +549,7 @@ function submitManualService() {
                 <i class="fas fa-times"></i>
             </button>
         </div>
-        <form class="p-4 space-y-4">
+        <form id="manual-service-form" class="p-4 space-y-4">
             <div>
                 <label class="block text-sm font-medium mb-1">Nama Jasa</label>
                 <input type="text" id="manual-service-name" class="w-full px-3 py-2 border rounded-lg" placeholder="Contoh: Ganti oli mesin">
